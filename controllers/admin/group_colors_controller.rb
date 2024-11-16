@@ -5,20 +5,24 @@ module DiscourseGroupColor
     requires_plugin 'discourse-group-color'
 
     def index
-      groups = Group.order(:name)
-      render_serialized(groups, AdminGroupColorSerializer)
+      groups = ::Group.order(:name)
+      render_serialized(groups, ::DiscourseGroupColor::AdminGroupColorSerializer)
     end
 
     def update
-      group = Group.find(params[:id])
-      group.assign_attributes(
-        color: params.require(:group).permit(:color, :rank)
-      )
-      if group.save
+      group = ::Group.find(params[:id])
+      
+      if group.update(group_params)
         render json: success_json
       else
-        render json: failed_json, status: 422
+        render json: failed_json.merge(errors: group.errors.full_messages), status: 422
       end
+    end
+
+    private
+
+    def group_params
+      params.require(:group).permit(:color, :rank)
     end
   end
 end
