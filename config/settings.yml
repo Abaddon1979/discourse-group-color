@@ -1,6 +1,5 @@
-# discourse-group-color/config/settings.yml
-
-discourse_group_color_enabled:
-  default: true
-  client: true
-  type: bool
+plugins:
+  discourse_group_color_enabled:
+    default: true
+    client: true
+    type: bool
