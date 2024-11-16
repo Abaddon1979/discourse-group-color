@@ -9,11 +9,21 @@ enabled_site_setting :discourse_group_color_enabled
 register_asset 'stylesheets/common/discourse-group-color.scss'
 register_asset 'stylesheets/desktop/user-card-hover.scss'
 
-# Load necessary files
-require_relative 'serializers/admin_group_color_serializer'
-require_relative 'controllers/admin/group_colors_controller'
-
 after_initialize do
+  module ::DiscourseGroupColor
+    class Engine < ::Rails::Engine
+      engine_name "discourse_group_color"
+      isolate_namespace DiscourseGroupColor
+    end
+  end
+
+  require_dependency "application_controller"
+  require_dependency "admin/admin_controller"
+  
+  # Load serializer and controller
+  load File.expand_path('../app/serializers/admin_group_color_serializer.rb', __FILE__)
+  load File.expand_path('../app/controllers/admin/group_colors_controller.rb', __FILE__)
+
   # Routes for admin page
   Discourse::Application.routes.append do
     namespace :admin, constraints: StaffConstraint.new do
