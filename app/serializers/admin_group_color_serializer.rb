@@ -1,7 +1,7 @@
-# plugins/discourse-group-color/serializers/admin_group_color_serializer.rb
+# plugins/discourse-group-color/app/serializers/admin_group_color_serializer.rb
 
 module DiscourseGroupColor
-  class AdminGroupColorSerializer < ::Admin::BasicGroupSerializer
+  class AdminGroupColorSerializer < ::BasicGroupSerializer
     attributes :color, :rank
   end
 end
