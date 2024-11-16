@@ -9,14 +9,6 @@ enabled_site_setting :discourse_group_color_enabled
 register_asset "stylesheets/common/discourse-group-color.scss"
 register_asset "stylesheets/desktop/user-card-hover.scss"
 
-# Register JavaScript assets
-register_asset 'javascripts/discourse/initializers/color-usernames.js.es6'
-register_asset 'javascripts/discourse/initializers/user-card-hover.js.es6'
-register_asset 'javascripts/discourse/routes/admin/group-colors.js.es6'
-register_asset 'javascripts/discourse/controllers/admin/group-colors.js.es6'
-register_asset 'javascripts/discourse/models/admin-group-color.js.es6'
-register_asset 'javascripts/discourse/templates/admin/group-colors.hbs'
-
 # Require the serializer
 require File.expand_path('serializers/admin_group_color_serializer.rb', __dir__)
 
