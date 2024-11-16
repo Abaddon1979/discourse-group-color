@@ -42,4 +42,7 @@ after_initialize do
       }
     end
   end
+
+  add_to_serializer(:group, :color)
+  add_to_serializer(:group, :rank)
 end
