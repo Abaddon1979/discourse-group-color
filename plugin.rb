@@ -13,9 +13,8 @@ register_asset "stylesheets/desktop/user-card-hover.scss"
 require File.expand_path('serializers/admin_group_color_serializer.rb', __dir__)
 
 after_initialize do
-  # Extend the Group model to include color and rank
-  Group.register_attribute(:color, :string, default: '')
-  Group.register_attribute(:rank, :integer, default: 9999)
+  # Removed the lines that caused the error
+  # The 'color' and 'rank' attributes are accessible because they are columns in the database
 
   # Add color and rank attributes to the GroupSerializer
   add_to_serializer(:basic_group, :color) { object.color }
