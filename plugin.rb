@@ -18,7 +18,7 @@ after_initialize do
   end
 
   require_dependency "application_controller"
-  require_dependency "admin/admin_controller"
+  require_dependency "basic_group_serializer"
   
   # Load serializer and controller
   load File.expand_path('../app/serializers/admin_group_color_serializer.rb', __FILE__)
