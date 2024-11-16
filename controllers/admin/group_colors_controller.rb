@@ -1,11 +1,11 @@
 # plugins/discourse-group-color/controllers/admin/group_colors_controller.rb
 
-class ::Admin::GroupColorsController < ::Admin::AdminController
+class Admin::GroupColorsController < Admin::AdminController
   requires_plugin 'discourse-group-color'
 
   def index
     groups = Group.order(:name)
-    render_serialized(groups, ::AdminGroupColorSerializer)
+    render_serialized(groups, AdminGroupColorSerializer)
   end
 
   def update
