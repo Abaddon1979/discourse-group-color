@@ -43,10 +43,22 @@ after_initialize do
     end
   end
 
-  add_to_serializer(:group_show, :color)
-  add_to_serializer(:group_show, :rank)
+  # Add to group show serializer
+  add_to_serializer(:group_show, :color) { object.color }
+  add_to_serializer(:group_show, :rank) { object.rank }
 
-  # Add to basic group serializer for the groups list
-  add_to_serializer(:basic_group, :color)
-  add_to_serializer(:basic_group, :rank)
+  # Add to basic group serializer
+  add_to_serializer(:basic_group, :color) { object.color }
+  add_to_serializer(:basic_group, :rank) { object.rank }
+
+  # Add to user serializer for consistency
+  add_to_serializer(:user, :user_group_colors) do
+    object.groups.map do |group|
+      {
+        name: group.name,
+        color: group.color,
+        rank: group.rank
+      }
+    end if object.groups.present?
+  end
 end
