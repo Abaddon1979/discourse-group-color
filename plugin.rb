@@ -6,39 +6,34 @@
 
 enabled_site_setting :discourse_group_color_enabled
 
-register_asset "stylesheets/common/discourse-group-color.scss"
-register_asset "stylesheets/desktop/user-card-hover.scss"
+register_asset 'stylesheets/common/discourse-group-color.scss'
+register_asset 'stylesheets/desktop/user-card-hover.scss'
 
-# Require the serializer
-require File.expand_path('serializers/admin_group_color_serializer.rb', __dir__)
+# Load required files
+load File.expand_path('controllers/admin/group_colors_controller.rb', __dir__)
+load File.expand_path('serializers/admin_group_color_serializer.rb', __dir__)
 
 after_initialize do
-  # Removed the lines that caused the error
-  # The 'color' and 'rank' attributes are accessible because they are columns in the database
-
   # Add color and rank attributes to the GroupSerializer
   add_to_serializer(:basic_group, :color) { object.color }
-  add_to_serializer(:basic_group, :rank) { object.rank }
+  add_to_serializer(:basic_group, :rank)  { object.rank }
 
   # Add user's groups with color and rank to the user card serializer
   add_to_serializer(:user_card, :user_group_colors) do
-    object.user.groups.map do |group|
+    object.groups.map do |group|
       {
-        name: group.name,
+        name:  group.name,
         color: group.color,
-        rank: group.rank
+        rank:  group.rank
       }
     end
   end
 
-  # Load the admin controller
-  load File.expand_path('controllers/admin/group_colors_controller.rb', __dir__)
-
-  # Add routes for the admin group colors page
+  # Define routes for the admin group colors page
   Discourse::Application.routes.append do
     namespace :admin, constraints: AdminConstraint.new do
-      get  '/groups/colors'     => 'group_colors#index',   as: 'admin_group_colors'
-      put  '/groups/:id/colors' => 'group_colors#update',  as: 'admin_group_color_update'
+      get  '/groups/colors'       => 'group_colors#index',  as: 'admin_group_colors'
+      put  '/groups/:id/colors'   => 'group_colors#update', as: 'admin_group_color_update'
     end
   end
 end
