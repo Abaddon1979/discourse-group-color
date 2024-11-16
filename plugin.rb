@@ -18,7 +18,7 @@ after_initialize do
   end
 
   require_dependency "application_controller"
-  require_dependency "basic_group_serializer"
+  require_dependency "group_show_serializer"
   
   # Load serializer and controller
   load File.expand_path('../app/serializers/admin_group_color_serializer.rb', __FILE__)
@@ -43,6 +43,10 @@ after_initialize do
     end
   end
 
-  add_to_serializer(:group, :color)
-  add_to_serializer(:group, :rank)
+  add_to_serializer(:group_show, :color)
+  add_to_serializer(:group_show, :rank)
+
+  # Add to basic group serializer for the groups list
+  add_to_serializer(:basic_group, :color)
+  add_to_serializer(:basic_group, :rank)
 end

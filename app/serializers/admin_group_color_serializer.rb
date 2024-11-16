@@ -3,5 +3,13 @@
 module DiscourseGroupColor
   class AdminGroupColorSerializer < ::BasicGroupSerializer
     attributes :color, :rank
+
+    def color
+      object.color || ""
+    end
+
+    def rank
+      object.rank || 9999
+    end
   end
 end
